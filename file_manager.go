@@ -30,7 +30,7 @@ func createFileManager(dir string, maxLoadedFiles uint8) (*fileManager, error) {
 		if runningInTest {
 			err = os.Mkdir(dir, 0777)
 		} else {
-			err = os.Mkdir(dir, 0660)
+			err = os.Mkdir(dir, 0666)
 		}
 		if err != nil {
 			return nil, err
