@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"strings"
+	"syscall"
 )
 
 var (
@@ -24,6 +25,7 @@ func createDB(dir string, maxLoadedFiles uint8) (*db, error) {
 		if runningInTest {
 			err = os.Mkdir(dir, 0777)
 		} else {
+			syscall.Umask(0)
 			err = os.Mkdir(dir, 0666)
 		}
 		if err != nil {
