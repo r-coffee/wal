@@ -40,6 +40,9 @@ func (c *Client) Write(file string, dat []byte) (uint64, error) {
 func (c *Client) Read(file string, offset uint64) (Message, error) {
 	var m Message
 
+	// ensure file exists
+	c.db.createFile(file)
+
 	raw, err := c.db.files[file].read(offset)
 	if err != nil {
 		return m, err
@@ -54,6 +57,9 @@ func (c *Client) Read(file string, offset uint64) (Message, error) {
 // ReadFrom reads all entries greater then offset
 func (c *Client) ReadFrom(file string, offset uint64) ([]Message, error) {
 	var ret []Message
+
+	// ensure file exists
+	c.db.createFile(file)
 
 	i := offset
 	for {
