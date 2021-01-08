@@ -12,7 +12,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"syscall"
 )
 
 type fileManager struct {
@@ -31,8 +30,7 @@ func createFileManager(dir string, maxLoadedFiles uint8) (*fileManager, error) {
 		if runningInTest {
 			err = os.Mkdir(dir, 0777)
 		} else {
-			syscall.Umask(0)
-			err = os.Mkdir(dir, 0666)
+			err = os.Mkdir(dir, 0777)
 		}
 		if err != nil {
 			return nil, err
